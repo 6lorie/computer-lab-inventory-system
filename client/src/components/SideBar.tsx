@@ -1,20 +1,17 @@
 import { Menu } from "antd";
-import {
-  DashboardOutlined,
-  DesktopOutlined,
-  FileTextOutlined,
-} from "@ant-design/icons";
+import { DashboardOutlined, DesktopOutlined, FileTextOutlined,} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 function SideBar() {
   const navigate = useNavigate();
-
+  
   return (
     <Menu
-      theme="dark"
+      theme="light"
       mode="inline"
       defaultSelectedKeys={["dashboard"]}
       style={{
+        
         height: "100%",
         background: "var(--panel)",
         borderRight: "1px solid var(--border)",
