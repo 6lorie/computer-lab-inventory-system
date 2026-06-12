@@ -3,6 +3,7 @@ import {
   DashboardOutlined,
   DesktopOutlined,
   FileTextOutlined,
+  BookOutlined
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -38,6 +39,12 @@ function SideBar() {
           label: "Reports",
           onClick: () => navigate("/reports"),
         },
+        {
+            key: "borrow-records",
+            icon: <BookOutlined/>,
+            label: "Borrow Records",
+            onClick: () => navigate("/borrow-records")
+        }
       ]}
     />
   );
