@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { Table, Button, message, Space, Input, InputNumber } from "antd";
 
 import AppLayout from "../components/AppLayout";
@@ -12,11 +11,6 @@ import {
     deleteEquipment,
     updateEquipment,
 } from "../services/equipmentService";
-=======
-import {Table, Button, message, Space, Modal,Input, InputNumber,} from "antd";
-import AppLayout from "../components/AppLayout";
-import { addEquipment, getEquipment, deleteEquipment, updateEquipment, } from "../services/equipmentService";
->>>>>>> main
 
 
 function Equipment() {

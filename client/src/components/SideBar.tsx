@@ -1,14 +1,10 @@
 import { Menu } from "antd";
-<<<<<<< HEAD
 import {
   DashboardOutlined,
   DesktopOutlined,
   FileTextOutlined,
   BookOutlined
 } from "@ant-design/icons";
-=======
-import { DashboardOutlined, DesktopOutlined, FileTextOutlined,} from "@ant-design/icons";
->>>>>>> main
 import { useNavigate } from "react-router-dom";
 
 function SideBar() {
