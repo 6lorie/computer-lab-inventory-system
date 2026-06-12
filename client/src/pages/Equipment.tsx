@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import { Table, Button, message, Space, Input, InputNumber } from "antd";
-
 import AppLayout from "../components/AppLayout";
 import ReusableModal from "../components/ReusableModal";
 import { borrowEquipment } from "../services/borrowService";
-
-import {
-    addEquipment,
-    getEquipment,
-    deleteEquipment,
-    updateEquipment,
-} from "../services/equipmentService";
+import {columns} from "../data/data";
+import { addEquipment, getEquipment, deleteEquipment, updateEquipment } from "../services/equipmentService";
 
 
 function Equipment() {
+
     const [data, setData] = useState<any[]>([]);
 
     /* ADD */
@@ -25,6 +20,7 @@ function Equipment() {
         quantity: 0,
         location: "",
     });
+
 
     /* EDIT */
     const [editOpen, setEditOpen] = useState(false);
@@ -68,6 +64,7 @@ function Equipment() {
             quantity: 0,
             location: "",
         });
+
     };
 
     const handleAddChange = (field: string, value: any) => {
@@ -78,10 +75,14 @@ function Equipment() {
     };
 
     const submitAdd = async () => {
-        await addEquipment(addForm);
-        message.success("Added");
-        closeAdd();
-        load();
+        try {
+            await addEquipment(addForm);
+            message.success("Added");
+            closeAdd();
+            load();
+        } catch (err: any) {
+            message.error(err.message);
+        }
     };
 
     /* ===================== EDIT ===================== */
@@ -102,6 +103,8 @@ function Equipment() {
             [field]: value,
         }));
     };
+
+
 
     const submitEdit = async () => {
         await updateEquipment(editForm.id, editForm);
@@ -146,35 +149,17 @@ function Equipment() {
         load(); // refresh stock
     };
 
+
+
     /* ===================== TABLE ===================== */
 
-    const columns = [
-        {
-            title: "Code",
-            dataIndex: "equipment_code",
-        },
-        {
-            title: "Name",
-            dataIndex: "equipment_name",
-        },
-        {
-            title: "Category",
-            dataIndex: "category",
-        },
-        {
-            title: "Qty",
-            dataIndex: "quantity",
-        },
-        {
-            title: "Location",
-            dataIndex: "location",
-        },
+    [
         {
             title: "Action",
             render: (_: any, r: any) => (
                 <Space>
                     <Button
-                        size="small"
+                        size="medium"
                         type="primary"
                         onClick={() => openEdit(r)}
                     >
@@ -183,14 +168,14 @@ function Equipment() {
 
                     <Button
                         danger
-                        size="small"
+                        size="medium"
                         onClick={() => remove(r.id)}
                     >
                         Delete
                     </Button>
 
                     <Button
-                        size="small"
+                        size="medium"
                         onClick={() => openBorrow(r.id)}
                     >
                         Borrow
@@ -202,8 +187,11 @@ function Equipment() {
 
     return (
         <AppLayout>
+            <h1>Equipments</h1>
+            <br />
             {/* HEADER */}
             <Button
+                className="btn-add"
                 type="primary"
                 onClick={openAdd}
                 style={{ marginBottom: 16 }}
@@ -217,6 +205,7 @@ function Equipment() {
                 dataSource={data}
                 rowKey="id"
                 columns={columns}
+                pagination={{pageSize:6}}
             />
 
             {/* ================= ADD MODAL ================= */}
@@ -265,6 +254,8 @@ function Equipment() {
                         handleAddChange("location", e.target.value)
                     }
                 />
+
+
             </ReusableModal>
 
             {/* ================= EDIT MODAL ================= */}

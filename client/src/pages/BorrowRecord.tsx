@@ -65,13 +65,13 @@ function BorrowRecords() {
                 r.status === "Borrowed" ? (
                     <Button
                         type="primary"
-                        size="small"
+                        size="medium"
                         onClick={() => handleReturn(r.id)}
                     >
                         Return
                     </Button>
                 ) : (
-                    <Button size="small" disabled>
+                    <Button size="medium" disabled>
                         Done
                     </Button>
                 ),
@@ -80,12 +80,13 @@ function BorrowRecords() {
 
     return (
         <AppLayout>
-            <h2>Borrow Records</h2>
-
+            <h1>Borrow Records</h1>
+            <br />
             <Table
                 dataSource={data}
                 rowKey="id"
                 columns={columns}
+                pagination={{pageSize:7}}
             />
         </AppLayout>
     );

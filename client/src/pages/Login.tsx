@@ -1,11 +1,4 @@
-import {
-  Card,
-  Typography,
-  Form,
-  Input,
-  Button,
-  message,
-} from "antd";
+import { Card, Typography, Form, Input, Button, message } from "antd";
 
 import { login } from "../services/authService";
 
@@ -24,12 +17,11 @@ function Login() {
     try {
       const res = await login(values);
 
-      // 💾 save user to localStorage
+     
       saveUser(res.user);
 
       message.success(res.message);
 
-      // 🚀 redirect to dashboard
       navigate("/dashboard");
 
     } catch (err) {

@@ -4,16 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(170, 59, 255, 0.12),
-      transparent 40%
-    ),
-    var(--bg);
-
-  padding: 24px;
 }
 
 .login-card {

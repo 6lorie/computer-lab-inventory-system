@@ -7,8 +7,18 @@ export async function getEquipment() {
 }
 
 export async function addEquipment(data: any) {
-    const res = await api.post("/equipment", data);
-    return res.data;
+    try {
+        const res = await api.post("/equipment", data);
+
+        return res.data;
+
+    } catch (error: any) {
+
+        throw error.response?.data || {
+            message: "Failed to add equipment"
+        };
+
+    }
 }
 
 export async function deleteEquipment(id: number) {

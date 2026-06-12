@@ -23,14 +23,16 @@ function TopBar() {
   return (
     <Header
       style={{
+        
         background: "var(--panel)",
-        borderBottom: "1px solid var(--border)",
+        
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center",
         paddingRight: 20,
       }}
     >
+      
       <Dropdown menu={{ items }} trigger={["click"]}>
         <Avatar
           style={{

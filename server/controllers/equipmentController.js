@@ -1,5 +1,5 @@
 const { sql } =
-require("../config/db");
+    require("../config/db");
 
 async function getAll(
     req,
@@ -8,7 +8,7 @@ async function getAll(
     try {
 
         const result =
-        await sql.query`
+            await sql.query`
             SELECT * FROM equipment
         `;
 
@@ -19,18 +19,15 @@ async function getAll(
     } catch (err) {
 
         res.status(500)
-        .json({
-            message:
-            "Error fetching equipment"
-        });
+            .json({
+                message:
+                    "Error fetching equipment"
+            });
 
     }
 }
 
-async function create(
-    req,
-    res
-) {
+async function create(req, res) {
     try {
 
         const {
@@ -41,35 +38,56 @@ async function create(
             location
         } = req.body;
 
-        await sql.query`
-            INSERT INTO equipment
-            (equipment_code,
-             equipment_name,
-             category,
-             quantity,
-             available,
-             location)
-            VALUES
-            (${equipment_code},
-             ${equipment_name},
-             ${category},
-             ${quantity},
-             ${quantity},
-             ${location})
+
+        // Check duplicate equipment code
+        const existing = await sql.query`
+            SELECT equipment_code
+            FROM equipment
+            WHERE equipment_code = ${equipment_code}
         `;
 
+
+        if (existing.recordset.length > 0) {
+            return res.status(400).json({
+                message: "Equipment code already exists"
+            });
+        }
+
+
+        // Insert if no duplicate
+        await sql.query`
+            INSERT INTO equipment
+            (
+                equipment_code,
+                equipment_name,
+                category,
+                quantity,
+                available,
+                location
+            )
+            VALUES
+            (
+                ${equipment_code},
+                ${equipment_name},
+                ${category},
+                ${quantity},
+                ${quantity},
+                ${location}
+            )
+        `;
+
+
         res.json({
-            message:
-            "Equipment added"
+            message: "Equipment added"
         });
+
 
     } catch (err) {
 
         res.status(500)
-        .json({
-            message:
-            "Error adding equipment"
-        });
+            .json({
+                message: "Error adding equipment"
+            });
 
     }
 }
@@ -91,16 +109,16 @@ async function remove(
 
         res.json({
             message:
-            "Deleted successfully"
+                "Deleted successfully"
         });
 
     } catch (err) {
 
         res.status(500)
-        .json({
-            message:
-            "Error deleting"
-        });
+            .json({
+                message:
+                    "Error deleting"
+            });
 
     }
 }

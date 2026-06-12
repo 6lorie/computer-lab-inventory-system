@@ -5,13 +5,6 @@
   border-radius: 10px !important;
 }
 
-.ant-input,
-.ant-input-password {
-  background: var(--panel-2) !important;
-  border: 1px solid var(--border) !important;
-  color: var(--text-h) !important;
-}
-
 #input-table {
   width: 60px;
 }
@@ -19,6 +12,7 @@
 .ant-btn-primary {
   background: var(--accent) !important;
   border: none !important;
+  
 }
 
 .ant-btn-primary:hover {
@@ -37,6 +31,7 @@
 
 /* TABLE CONTAINER */
 .ant-table {
+  
   background: var(--panel) !important;
   color: var(--text-h) !important;
   border-radius: 10px !important;
@@ -50,6 +45,7 @@
 
 /* HEADER */
 .ant-table-thead > tr > th {
+  text-align: center !important;
   background: var(--panel-2) !important;
   color: var(--text-h) !important;
   border-bottom: 1px solid var(--border) !important;
@@ -57,6 +53,7 @@
 
 /* ROWS */
 .ant-table-tbody > tr > td {
+  text-align: center !important;
   background: var(--panel) !important;
   color: var(--text-h) !important;
   border-bottom: 1px solid var(--border) !important;

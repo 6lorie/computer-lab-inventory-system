@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Row, Table } from "antd";
+import { columns_reports } from "../data/data";
 
 import {
     BarChart,
@@ -74,7 +75,8 @@ function Dashboard() {
 
     return (
         <AppLayout>
-
+            <h1>Dashboard</h1>
+            <br />
             <div className="dashboard">
 
                 {/* CARDS */}
@@ -171,23 +173,10 @@ function Dashboard() {
                     <h3>Recent Equipment</h3>
 
                     <Table
-                        pagination={false}
-                        dataSource={data.slice(0, 5)}
+                        pagination={{pageSize:5}}
+                        dataSource={data}
                         rowKey="id"
-                        columns={[
-                            {
-                                title: "Name",
-                                dataIndex: "equipment_name",
-                            },
-                            {
-                                title: "Category",
-                                dataIndex: "category",
-                            },
-                            {
-                                title: "Qty",
-                                dataIndex: "quantity",
-                            },
-                        ]}
+                        columns={columns_reports}
                     />
 
                 </Card>

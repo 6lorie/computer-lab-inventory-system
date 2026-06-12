@@ -5,6 +5,7 @@ import AppLayout from "../components/AppLayout";
 import { getEquipment } from "../services/equipmentService";
 
 import "../styles/reports.css";
+import {columns_reports} from "../data/data";
 
 function Reports() {
     const [data, setData] = useState<any[]>([]);
@@ -72,32 +73,8 @@ function Reports() {
                     style={{ marginTop: 20 }}
                     dataSource={data}
                     rowKey="id"
-                    columns={[
-                        {
-                            title: "Code",
-                            dataIndex: "equipment_code",
-                        },
-                        {
-                            title: "Name",
-                            dataIndex: "equipment_name",
-                        },
-                        {
-                            title: "Category",
-                            dataIndex: "category",
-                        },
-                        {
-                            title: "Quantity",
-                            dataIndex: "quantity",
-                        },
-                        {
-                            title: "Available",
-                            dataIndex: "available",
-                        },
-                        {
-                            title: "Location",
-                            dataIndex: "location",
-                        },
-                    ]}
+                    columns={columns_reports}
+                    pagination={{pageSize:5}}
                 />
 
             </div>

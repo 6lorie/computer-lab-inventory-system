@@ -1,25 +1,40 @@
 import { Menu } from "antd";
-import {
-  DashboardOutlined,
-  DesktopOutlined,
-  FileTextOutlined,
-  BookOutlined
-} from "@ant-design/icons";
+import { DashboardOutlined, DesktopOutlined, FileTextOutlined, BookOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 function SideBar() {
   const navigate = useNavigate();
   
   return (
+     <div
+      style={{
+        height: "100%",
+        background: "var(--panel)"
+      }}
+    >
+
+      {/* Logo */}
+      <div
+        style={{
+          height: "60px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "18px",
+          fontWeight: "bold"
+        }}
+      >
+        Com Lab Inventory 
+      </div>
     <Menu
       theme="light"
       mode="inline"
       defaultSelectedKeys={["dashboard"]}
       style={{
-        
         height: "100%",
         background: "var(--panel)",
-        borderRight: "1px solid var(--border)",
+        border: "none",
+        
       }}
       items={[
         {
@@ -48,6 +63,7 @@ function SideBar() {
         }
       ]}
     />
+    </div>
   );
 }
 
