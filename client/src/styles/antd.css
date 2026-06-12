@@ -12,6 +12,10 @@
   color: var(--text-h) !important;
 }
 
+#input-table {
+  width: 60px;
+}
+
 .ant-btn-primary {
   background: var(--accent) !important;
   border: none !important;
@@ -29,4 +33,64 @@
   background: var(--panel) !important;
   color: var(--text-h) !important;
   border: 1px solid var(--border);
+}
+
+/* TABLE CONTAINER */
+.ant-table {
+  background: var(--panel) !important;
+  color: var(--text-h) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+/* TABLE WRAPPER */
+.ant-table-wrapper {
+  background: transparent !important;
+}
+
+/* HEADER */
+.ant-table-thead > tr > th {
+  background: var(--panel-2) !important;
+  color: var(--text-h) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* ROWS */
+.ant-table-tbody > tr > td {
+  background: var(--panel) !important;
+  color: var(--text-h) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* HOVER EFFECT */
+.ant-table-tbody > tr:hover > td {
+  background: var(--panel-2) !important;
+}
+
+/* PAGINATION */
+.ant-pagination {
+  color: var(--text-h) !important;
+}
+
+.ant-pagination-item {
+  background: var(--panel) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.ant-pagination-item a {
+  color: var(--text-h) !important;
+}
+
+.ant-pagination-item-active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.ant-pagination-item-active a {
+  color: #fff !important;
+}
+
+/* EMPTY STATE */
+.ant-empty-description {
+  color: var(--text-h) !important;
 }

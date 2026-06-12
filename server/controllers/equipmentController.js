@@ -105,8 +105,44 @@ async function remove(
     }
 }
 
+async function update(req, res) {
+    try {
+        const { id } = req.params;
+
+        const {
+            equipment_code,
+            equipment_name,
+            category,
+            quantity,
+            location
+        } = req.body;
+
+        await sql.query`
+            UPDATE equipment
+            SET
+                equipment_code = ${equipment_code},
+                equipment_name = ${equipment_name},
+                category = ${category},
+                quantity = ${quantity},
+                location = ${location},
+                available = ${quantity}
+            WHERE id = ${id}
+        `;
+
+        res.json({
+            message: "Updated successfully"
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            message: "Error updating equipment"
+        });
+    }
+}
+
 module.exports = {
     getAll,
     create,
-    remove
+    remove,
+    update
 };
