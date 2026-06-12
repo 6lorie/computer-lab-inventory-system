@@ -1,81 +1,202 @@
 import { useEffect, useState } from "react";
-import { Table, Button, message } from "antd";
+import { Table, Button, message, Space } from "antd";
 import AppLayout from "../components/AppLayout";
+import "../styles/antd.css";
+import "../styles/index.css";
 
 import {
     getEquipment,
-    deleteEquipment
+    deleteEquipment,
+    updateEquipment,
 } from "../services/equipmentService";
 
 function Equipment() {
+    const [data, setData] = useState<any[]>([]);
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editForm, setEditForm] = useState<any>({});
 
-const [data, setData] = useState([]);
+    /* LOAD DATA */
+    async function load() {
+        const res = await getEquipment();
+        setData(res);
+    }
 
-async function load() {
-    const res =
-    await getEquipment();
+    useEffect(() => {
+        load();
+    }, []);
 
-    setData(res);
-}
+    /* DELETE */
+    async function remove(id: number) {
+        await deleteEquipment(id);
+        message.success("Deleted");
+        load();
+    }
 
-async function remove(id: number) {
-    await deleteEquipment(id);
-    message.success("Deleted");
-    load();
-}
+    /* START EDIT */
+    function startEdit(record: any) {
+        setEditingId(record.id);
+        setEditForm({ ...record });
+    }
 
-useEffect(() => {
-    load();
-}, []);
+    /* CANCEL EDIT */
+    function cancelEdit() {
+        setEditingId(null);
+        setEditForm({});
+    }
 
-return (
-    <AppLayout>
+    /* HANDLE INPUT CHANGE */
+    function handleChange(field: string, value: any) {
+        setEditForm((prev: any) => ({
+            ...prev,
+            [field]: value,
+        }));
+    }
 
-        <Button
-            type="primary"
-            style={{ marginBottom: 16 }}
-        >
-            Add Equipment
-        </Button>
+    /* SAVE EDIT */
+    async function saveEdit(id: number) {
+        await updateEquipment(id, editForm);
+        message.success("Updated");
+        setEditingId(null);
+        load();
+    }
 
-        <Table
-            dataSource={data}
-            rowKey="id"
-            columns={[
-                {
-                    title: "Code",
-                    dataIndex: "equipment_code",
-                },
-                {
-                    title: "Name",
-                    dataIndex: "equipment_name",
-                },
-                {
-                    title: "Category",
-                    dataIndex: "category",
-                },
-                {
-                    title: "Quantity",
-                    dataIndex: "quantity",
-                },
-                {
-                    title: "Location",
-                    dataIndex: "location",
-                },
-                {
-                    title: "Action",
-                    render: (_, record: any) => (
-                        <Button danger onClick={() => remove(record.id)}>
-                            Delete
-                        </Button>
-                    )
-                }
-            ]}
-        />
+    return (
+        <AppLayout>
+            {/* ADD BUTTON (for future modal) */}
+            <Button type="primary" style={{ marginBottom: 16 }}>
+                Add Equipment
+            </Button>
 
-    </AppLayout>
-);
+            <Table
+                className="antd-table"
+                dataSource={data}
+                rowKey="id"
+                columns={[
+                    {
+                        title: "Code",
+                        dataIndex: "equipment_code",
+                        render: (_: any, record: any) =>
+                            editingId === record.id ? (
+                                <input id="input-table"
+                                    value={editForm.equipment_code}
+                                    onChange={(e) =>
+                                        handleChange(
+                                            "equipment_code",
+                                            e.target.value
+                                        )
+                                    }
+                                />
+                            ) : (
+                                record.equipment_code
+                            ),
+                    },
+                    {
+                        title: "Name",
+                        dataIndex: "equipment_name",
+                        render: (_: any, record: any) =>
+                            editingId === record.id ? (
+                                <input id="input-table"
+                                    value={editForm.equipment_name}
+                                    onChange={(e) =>
+                                        handleChange(
+                                            "equipment_name",
+                                            e.target.value
+                                        )
+                                    }
+                                />
+                            ) : (
+                                record.equipment_name
+                            ),
+                    },
+                    {
+                        title: "Category",
+                        dataIndex: "category",
+                        render: (_: any, record: any) =>
+                            editingId === record.id ? (
+                                <input id="input-table"
+                                    value={editForm.category}
+                                    onChange={(e) =>
+                                        handleChange("category", e.target.value)
+                                    }
+                                />
+                            ) : (
+                                record.category
+                            ),
+                    },
+                    {
+                        title: "Quantity",
+                        dataIndex: "quantity",
+                        render: (_: any, record: any) =>
+                            editingId === record.id ? (
+                                <input id="input-table"
+                                    type="number"
+                                    value={editForm.quantity}
+                                    onChange={(e) =>
+                                        handleChange("quantity", e.target.value)
+                                    }
+                                />
+                            ) : (
+                                record.quantity
+                            ),
+                    },
+                    {
+                        title: "Location",
+                        dataIndex: "location",
+                        render: (_: any, record: any) =>
+                            editingId === record.id ? (
+                                <input id="input-table"
+                                    value={editForm.location}
+                                    onChange={(e) =>
+                                        handleChange("location", e.target.value)
+                                    }
+                                />
+                            ) : (
+                                record.location
+                            ),
+                    },
 
+                    /* ACTION COLUMN */
+                    {
+                        title: "Action",
+                        render: (_: any, record: any) =>
+                            editingId === record.id ? (
+                                <Space>
+                                    <Button
+                                        type="primary"
+                                        size="small"
+                                        onClick={() => saveEdit(record.id)}
+                                    >
+                                        Save
+                                    </Button>
+
+                                    <Button size="small" onClick={cancelEdit}>
+                                        Cancel
+                                    </Button>
+                                </Space>
+                            ) : (
+                                <Space>
+                                    <Button
+                                        type="primary"
+                                        size="small"
+                                        onClick={() => startEdit(record)}
+                                    >
+                                        Edit
+                                    </Button>
+
+                                    <Button
+                                        danger
+                                        size="small"
+                                        onClick={() => remove(record.id)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Space>
+                            ),
+                    },
+                ]}
+            />
+        </AppLayout>
+    );
 }
 
 export default Equipment;

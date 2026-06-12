@@ -16,3 +16,8 @@ export async function deleteEquipment(id: number) {
 
     return res.data;
 }
+
+export async function updateEquipment(id: number, data: any) {
+    const res = await api.put(`/equipment/${id}`, data);
+    return res.data;
+}
