@@ -1,0 +1,40 @@
+.report-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.report-card {
+    background: var(--panel) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-h) !important;
+}
+
+.report-card h3 {
+    color: var(--text-m);
+    margin-bottom: 10px;
+}
+
+.report-card h1 {
+    color: var(--accent);
+    margin: 0;
+    font-size: 32px;
+}
+
+.report-table .ant-table {
+    background: var(--panel) !important;
+}
+
+.report-table .ant-table-thead th {
+    background: var(--panel-2) !important;
+    color: var(--text-h) !important;
+}
+
+.report-table .ant-table-tbody td {
+    background: var(--panel) !important;
+    color: var(--text-h) !important;
+}
+
+.report-table .ant-table-tbody tr:hover td {
+    background: var(--panel-2) !important;
+}
