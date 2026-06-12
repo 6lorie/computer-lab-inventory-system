@@ -15,6 +15,8 @@ Route
 from "react-router-dom";
 import ProtectedRoute from "./components/protectedRoute";
 
+import BorrowRecords from "./pages/BorrowRecord";
+
 function App() {
 
 return (
@@ -58,7 +60,11 @@ element={
           }
         />
 
+        <Route path="/borrow-records" element={<BorrowRecords />} />
+
 </Routes>
+
+
 
 </BrowserRouter>
 

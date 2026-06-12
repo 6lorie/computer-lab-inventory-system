@@ -1,5 +1,10 @@
 import { Menu } from "antd";
-import { DashboardOutlined, DesktopOutlined, FileTextOutlined,} from "@ant-design/icons";
+import {
+  DashboardOutlined,
+  DesktopOutlined,
+  FileTextOutlined,
+  BookOutlined
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 function SideBar() {
@@ -35,6 +40,12 @@ function SideBar() {
           label: "Reports",
           onClick: () => navigate("/reports"),
         },
+        {
+            key: "borrow-records",
+            icon: <BookOutlined/>,
+            label: "Borrow Records",
+            onClick: () => navigate("/borrow-records")
+        }
       ]}
     />
   );
