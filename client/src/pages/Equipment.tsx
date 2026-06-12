@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
-import { Table, Button, message, Space } from "antd";
+import {
+    Table,
+    Button,
+    message,
+    Space,
+    Modal,
+    Input,
+    InputNumber,
+} from "antd";
+
 import AppLayout from "../components/AppLayout";
-import "../styles/antd.css";
-import "../styles/index.css";
+
 
 import {
+    addEquipment,
     getEquipment,
     deleteEquipment,
     updateEquipment,
@@ -15,55 +24,206 @@ function Equipment() {
     const [editingId, setEditingId] = useState<number | null>(null);
     const [editForm, setEditForm] = useState<any>({});
 
-    /* LOAD DATA */
-    async function load() {
+    const [isAddOpen, setIsAddOpen] = useState(false);
+    const [addForm, setAddForm] = useState<any>({
+        equipment_code: "",
+        equipment_name: "",
+        category: "",
+        quantity: 0,
+        location: "",
+    });
+
+    /* LOAD */
+    const load = async () => {
         const res = await getEquipment();
         setData(res);
-    }
+    };
 
     useEffect(() => {
         load();
     }, []);
 
     /* DELETE */
-    async function remove(id: number) {
+    const remove = async (id: number) => {
         await deleteEquipment(id);
         message.success("Deleted");
         load();
-    }
+    };
 
-    /* START EDIT */
-    function startEdit(record: any) {
+    /* EDIT */
+    const startEdit = (record: any) => {
         setEditingId(record.id);
         setEditForm({ ...record });
-    }
+    };
 
-    /* CANCEL EDIT */
-    function cancelEdit() {
+    const cancelEdit = () => {
         setEditingId(null);
         setEditForm({});
-    }
+    };
 
-    /* HANDLE INPUT CHANGE */
-    function handleChange(field: string, value: any) {
+    const handleEditChange = (field: string, value: any) => {
         setEditForm((prev: any) => ({
             ...prev,
             [field]: value,
         }));
-    }
+    };
 
-    /* SAVE EDIT */
-    async function saveEdit(id: number) {
+    const saveEdit = async (id: number) => {
         await updateEquipment(id, editForm);
         message.success("Updated");
-        setEditingId(null);
+        cancelEdit();
         load();
-    }
+    };
+
+    /* ADD */
+    const openAdd = () => setIsAddOpen(true);
+
+    const closeAdd = () => {
+        setIsAddOpen(false);
+        setAddForm({
+            equipment_code: "",
+            equipment_name: "",
+            category: "",
+            quantity: 0,
+            location: "",
+        });
+    };
+
+    const handleAddChange = (field: string, value: any) => {
+        setAddForm((prev: any) => ({
+            ...prev,
+            [field]: value,
+        }));
+    };
+
+    const submitAdd = async () => {
+        await addEquipment(addForm);
+        message.success("Added");
+        closeAdd();
+        load();
+    };
+
+    /* TABLE COLUMNS */
+    const columns = [
+        {
+            title: "Code",
+            dataIndex: "equipment_code",
+            render: (_: any, r: any) =>
+                editingId === r.id ? (
+                    <Input
+                    className="table-input"
+                        value={editForm.equipment_code}
+                        onChange={(e) =>
+                            handleEditChange("equipment_code", e.target.value)
+                        }
+                    />
+                ) : (
+                    r.equipment_code
+                ),
+        },
+        {
+            title: "Name",
+            dataIndex: "equipment_name",
+            render: (_: any, r: any) =>
+                editingId === r.id ? (
+                    <Input
+                    className="table-input"
+                        value={editForm.equipment_name}
+                        onChange={(e) =>
+                            handleEditChange("equipment_name", e.target.value)
+                        }
+                    />
+                ) : (
+                    r.equipment_name
+                ),
+        },
+        {
+            title: "Category",
+            dataIndex: "category",
+            render: (_: any, r: any) =>
+                editingId === r.id ? (
+                    <Input
+                    className="table-input"
+                        value={editForm.category}
+                        onChange={(e) =>
+                            handleEditChange("category", e.target.value)
+                        }
+                    />
+                ) : (
+                    r.category
+                ),
+        },
+        {
+            title: "Qty",
+            dataIndex: "quantity",
+            render: (_: any, r: any) =>
+                editingId === r.id ? (
+                    <InputNumber
+                    className="table-input"
+                        value={editForm.quantity}
+                        onChange={(v) => handleEditChange("quantity", v)}
+                        style={{ width: "100%" }}
+                    />
+                ) : (
+                    r.quantity
+                ),
+        },
+        {
+            title: "Location",
+            dataIndex: "location",
+            render: (_: any, r: any) =>
+                editingId === r.id ? (
+                    <Input
+                        className="table-input"
+                        value={editForm.location}
+                        onChange={(e) =>
+                            handleEditChange("location", e.target.value)
+                        }
+                    />
+                ) : (
+                    r.location
+                ),
+        },
+        {
+            title: "Action",
+            render: (_: any, r: any) =>
+                editingId === r.id ? (
+                    <Space>
+                        <Button
+                            type="primary"
+                            size="small"
+                            onClick={() => saveEdit(r.id)}
+                        >
+                            Save
+                        </Button>
+                        <Button size="small" onClick={cancelEdit}>
+                            Cancel
+                        </Button>
+                    </Space>
+                ) : (
+                    <Space>
+                        <Button
+                            size="small"
+                            type="primary"
+                            onClick={() => startEdit(r)}
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            danger
+                            size="small"
+                            onClick={() => remove(r.id)}
+                        >
+                            Delete
+                        </Button>
+                    </Space>
+                ),
+        },
+    ];
 
     return (
         <AppLayout>
-            {/* ADD BUTTON (for future modal) */}
-            <Button type="primary" style={{ marginBottom: 16 }}>
+            <Button type="primary" onClick={openAdd} style={{ marginBottom: 16 }}>
                 Add Equipment
             </Button>
 
@@ -71,130 +231,57 @@ function Equipment() {
                 className="antd-table"
                 dataSource={data}
                 rowKey="id"
-                columns={[
-                    {
-                        title: "Code",
-                        dataIndex: "equipment_code",
-                        render: (_: any, record: any) =>
-                            editingId === record.id ? (
-                                <input id="input-table"
-                                    value={editForm.equipment_code}
-                                    onChange={(e) =>
-                                        handleChange(
-                                            "equipment_code",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                            ) : (
-                                record.equipment_code
-                            ),
-                    },
-                    {
-                        title: "Name",
-                        dataIndex: "equipment_name",
-                        render: (_: any, record: any) =>
-                            editingId === record.id ? (
-                                <input id="input-table"
-                                    value={editForm.equipment_name}
-                                    onChange={(e) =>
-                                        handleChange(
-                                            "equipment_name",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                            ) : (
-                                record.equipment_name
-                            ),
-                    },
-                    {
-                        title: "Category",
-                        dataIndex: "category",
-                        render: (_: any, record: any) =>
-                            editingId === record.id ? (
-                                <input id="input-table"
-                                    value={editForm.category}
-                                    onChange={(e) =>
-                                        handleChange("category", e.target.value)
-                                    }
-                                />
-                            ) : (
-                                record.category
-                            ),
-                    },
-                    {
-                        title: "Quantity",
-                        dataIndex: "quantity",
-                        render: (_: any, record: any) =>
-                            editingId === record.id ? (
-                                <input id="input-table"
-                                    type="number"
-                                    value={editForm.quantity}
-                                    onChange={(e) =>
-                                        handleChange("quantity", e.target.value)
-                                    }
-                                />
-                            ) : (
-                                record.quantity
-                            ),
-                    },
-                    {
-                        title: "Location",
-                        dataIndex: "location",
-                        render: (_: any, record: any) =>
-                            editingId === record.id ? (
-                                <input id="input-table"
-                                    value={editForm.location}
-                                    onChange={(e) =>
-                                        handleChange("location", e.target.value)
-                                    }
-                                />
-                            ) : (
-                                record.location
-                            ),
-                    },
-
-                    /* ACTION COLUMN */
-                    {
-                        title: "Action",
-                        render: (_: any, record: any) =>
-                            editingId === record.id ? (
-                                <Space>
-                                    <Button
-                                        type="primary"
-                                        size="small"
-                                        onClick={() => saveEdit(record.id)}
-                                    >
-                                        Save
-                                    </Button>
-
-                                    <Button size="small" onClick={cancelEdit}>
-                                        Cancel
-                                    </Button>
-                                </Space>
-                            ) : (
-                                <Space>
-                                    <Button
-                                        type="primary"
-                                        size="small"
-                                        onClick={() => startEdit(record)}
-                                    >
-                                        Edit
-                                    </Button>
-
-                                    <Button
-                                        danger
-                                        size="small"
-                                        onClick={() => remove(record.id)}
-                                    >
-                                        Delete
-                                    </Button>
-                                </Space>
-                            ),
-                    },
-                ]}
+                columns={columns}
             />
+
+            <Modal
+                title="Add Equipment"
+                open={isAddOpen}
+                onCancel={closeAdd}
+                onOk={submitAdd}
+                okText="Save"
+            >
+                <div className="equipment-form">
+                    <Input
+                        className="table-input"
+                        placeholder="Code"
+                        value={addForm.equipment_code}
+                        onChange={(e) =>
+                            handleAddChange("equipment_code", e.target.value)
+                        }
+                    />
+                    <Input
+                    className="table-input"
+                        placeholder="Name"
+                        value={addForm.equipment_name}
+                        onChange={(e) =>
+                            handleAddChange("equipment_name", e.target.value)
+                        }
+                    />
+                    <Input
+                    className="table-input"
+                        placeholder="Category"
+                        value={addForm.category}
+                        onChange={(e) =>
+                            handleAddChange("category", e.target.value)
+                        }
+                    />
+                    <InputNumber
+                    className="table-input"
+                        style={{ width: "100%" }}
+                        value={addForm.quantity}
+                        onChange={(v) => handleAddChange("quantity", v)}
+                    />
+                    <Input
+                    className="table-input"
+                        placeholder="Location"
+                        value={addForm.location}
+                        onChange={(e) =>
+                            handleAddChange("location", e.target.value)
+                        }
+                    />
+                </div>
+            </Modal>
         </AppLayout>
     );
 }
