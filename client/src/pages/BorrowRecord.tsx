@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Table, Button, message, Tag } from "antd";
+import { Table, Button, message, Tag, Input } from "antd";
 
 import AppLayout from "../components/AppLayout";
 import {
@@ -23,7 +23,7 @@ function BorrowRecords() {
         await returnEquipment({ borrow_id: id });
 
         message.success("Returned successfully");
-
+        
         load();
     };
 
@@ -78,15 +78,35 @@ function BorrowRecords() {
         },
     ];
 
+    const [search, setSearch] = useState("");
     return (
         <AppLayout>
             <h1>Borrow Records</h1>
             <br />
+
+            <Input
+                placeholder="Search by code, name, or category..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                    marginBottom: 16, width: 300, marginLeft: 860,
+                    borderColor: "grey"
+                }}
+            />
+            
             <Table
-                dataSource={data}
+                dataSource={data.filter((item) => {
+                    const keyword = search.toLowerCase();
+
+                    return (
+                        item.equipment_code.toLowerCase().includes(keyword) ||
+                        item.borrower_name.toLowerCase().includes(keyword) ||
+                        item.equipment_name.toLowerCase().includes(keyword)
+                    );
+                })}
                 rowKey="id"
                 columns={columns}
-                pagination={{pageSize:7}}
+                pagination={{pageSize:6}}
             />
         </AppLayout>
     );

@@ -8,6 +8,6 @@ export default function ProtectedRoute({ children }: any) {
   if (!user) {
     return <Navigate to="/" replace />;
   }
-
+  
   return children;
 }
