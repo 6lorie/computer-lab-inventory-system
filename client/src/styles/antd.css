@@ -23,6 +23,8 @@
   color: var(--text-h) !important;
 }
 
+
+
 .ant-message-notice-content {
   background: var(--panel) !important;
   color: var(--text-h) !important;
@@ -90,4 +92,94 @@
 /* EMPTY STATE */
 .ant-empty-description {
   color: var(--text-h) !important;
+}
+
+/* =========================
+   ANTD MODAL (THEME MATCHED)
+========================= */
+
+/* MODAL CONTAINER */
+.ant-modal-content {
+  background: var(--panel) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  box-shadow: var(--shadow) !important;
+  overflow: hidden;
+  font-family: var(--font);
+}
+
+/* MODAL HEADER */
+.ant-modal-header {
+  margin-top: 20px;
+  background: var(--panel-2) !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 14px 20px !important;
+}
+
+/* TITLE */
+.ant-modal-title {
+  color: var(--text-h) !important;
+  font-weight: 600;
+}
+
+/* MODAL BODY */
+.ant-modal-body {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  padding: 20px !important;
+  border: var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* FOOTER */
+.ant-modal-footer {
+  margin-bottom: 20px;
+  background: var(--panel-2) !important;
+  border-top: 1px solid var(--border) !important;
+  padding: 12px 20px !important;
+}
+
+/* INPUTS INSIDE MODAL */
+.ant-modal .ant-input,
+.ant-modal .ant-input-number,
+.ant-modal .ant-select-selector {
+  height: 35px;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+}
+
+/* INPUT FOCUS */
+.ant-modal .ant-input:focus,
+.ant-modal .ant-input-focused,
+.ant-modal .ant-input-number-focused,
+.ant-modal .ant-select-focused .ant-select-selector {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px rgba(72, 39, 171, 0.2) !important;
+}
+
+/* PRIMARY BUTTON (MODAL OK BUTTON) */
+.ant-modal .ant-btn-primary {
+  background: var(--accent) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+}
+
+/* PRIMARY BUTTON HOVER */
+.ant-modal .ant-btn-primary:hover {
+  background: var(--accent-hover) !important;
+}
+
+/* DEFAULT BUTTON */
+.ant-modal .ant-btn {
+  border-radius: 8px !important;
+}
+
+/* DISABLED BUTTON */
+.ant-modal .ant-btn[disabled] {
+  opacity: 0.6;
 }

@@ -32,7 +32,6 @@ export const columns = [
 ];
 
 
-
 export const columns_reports = [
     {
         title: "Code",

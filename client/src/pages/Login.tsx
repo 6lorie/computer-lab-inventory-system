@@ -36,9 +36,9 @@ function Login() {
 
         <div className="login-header">
 
-          <Text className="login-system">
-            COMPUTER LABORATORY MANAGEMENT SYSTEM
-          </Text>
+          <h2>COMPUTER LABORATORY MANAGEMENT SYSTEM</h2>
+            
+          <br />
 
           <Title level={2} className="login-title">
             Login

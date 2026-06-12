@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Table, Button, message, Space, Input, InputNumber } from "antd";
+import { Table, Button, message, Space, Input, InputNumber, Modal } from "antd";
 import AppLayout from "../components/AppLayout";
-import ReusableModal from "../components/ReusableModal";
 import { borrowEquipment } from "../services/borrowService";
-import {columns} from "../data/data";
 import { addEquipment, getEquipment, deleteEquipment, updateEquipment } from "../services/equipmentService";
 
 
 function Equipment() {
+
+
+
 
     const [data, setData] = useState<any[]>([]);
 
@@ -35,6 +36,8 @@ function Equipment() {
     });
 
     /* LOAD */
+
+    const [search, setSearch] = useState("");
     const load = async () => {
         const res = await getEquipment();
         setData(res);
@@ -45,12 +48,21 @@ function Equipment() {
     }, []);
 
     /* DELETE */
-    const remove = async (id: number) => {
-        await deleteEquipment(id);
-        message.success("Deleted");
-        load();
-    };
+    const remove = (id: number) => {
+        Modal.confirm({
+            title: "Delete Equipment",
+            content: "Are you sure you want to delete this item?",
+            okText: "Yes, Delete",
+            cancelText: "No",
+            okType: "danger",
 
+            onOk: async () => {
+                await deleteEquipment(id);
+                message.success("Deleted");
+                load();
+            },
+        });
+    };
     /* ===================== ADD ===================== */
 
     const openAdd = () => setAddOpen(true);
@@ -74,7 +86,25 @@ function Equipment() {
         }));
     };
 
+    const validateAddForm = () => {
+        const { equipment_code, equipment_name, category, quantity, location } = addForm;
+
+        if (!equipment_code || !equipment_name || !category || !location) {
+            message.error("Please fill in all required fields");
+            return false;
+        }
+
+        if (quantity === null || quantity === undefined || quantity < 0) {
+            message.error("Quantity must be valid");
+            return false;
+        }
+
+        return true;
+    };
+
     const submitAdd = async () => {
+        if (!validateAddForm()) return;
+
         try {
             await addEquipment(addForm);
             message.success("Added");
@@ -153,7 +183,41 @@ function Equipment() {
 
     /* ===================== TABLE ===================== */
 
-    [
+    const columns = [
+        {
+            title: "Code",
+            dataIndex: "equipment_code",
+        },
+        {
+            title: "Name",
+            dataIndex: "equipment_name",
+        },
+        {
+            title: "Category",
+            dataIndex: "category",
+        },
+        {
+            title: "Qty",
+            dataIndex: "quantity",
+            render: (qty: number) => {
+                const isLow = qty <= 5;
+
+                return (
+                    <span
+                        style={{
+                            color: isLow ? "red" : "inherit",
+                            fontWeight: isLow ? "bold" : "normal",
+                        }}
+                    >
+                        {qty} {isLow && "[LOW STOCK]"}
+                    </span>
+                );
+            },
+        },
+        {
+            title: "Location",
+            dataIndex: "location",
+        },
         {
             title: "Action",
             render: (_: any, r: any) => (
@@ -200,16 +264,34 @@ function Equipment() {
             </Button>
 
             {/* TABLE */}
+            <Input
+                placeholder="Search by code, name, or category..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                    marginBottom: 16, width: 300, marginLeft: 730,
+                    borderColor: "grey"
+                }}
+            />
+
             <Table
                 className="equipment-table"
-                dataSource={data}
+                dataSource={data.filter((item) => {
+                    const keyword = search.toLowerCase();
+
+                    return (
+                        item.equipment_code?.toLowerCase().includes(keyword) ||
+                        item.equipment_name?.toLowerCase().includes(keyword) ||
+                        item.category?.toLowerCase().includes(keyword)
+                    );
+                })}
                 rowKey="id"
                 columns={columns}
-                pagination={{pageSize:6}}
+                pagination={{ pageSize: 6 }}
             />
 
             {/* ================= ADD MODAL ================= */}
-            <ReusableModal
+            <Modal
                 title="Add Equipment"
                 open={addOpen}
                 onCancel={closeAdd}
@@ -256,10 +338,10 @@ function Equipment() {
                 />
 
 
-            </ReusableModal>
+            </Modal>
 
             {/* ================= EDIT MODAL ================= */}
-            <ReusableModal
+            <Modal
                 title="Edit Equipment"
                 open={editOpen}
                 onCancel={closeEdit}
@@ -304,10 +386,10 @@ function Equipment() {
                         handleEditChange("location", e.target.value)
                     }
                 />
-            </ReusableModal>
+            </Modal>
 
             {/* ================= BORROW MODAL ================= */}
-            <ReusableModal
+            <Modal
                 title="Borrow Equipment"
                 open={borrowOpen}
                 onCancel={closeBorrow}
@@ -329,7 +411,7 @@ function Equipment() {
                         handleBorrowChange("quantity", v)
                     }
                 />
-            </ReusableModal>
+            </Modal>
         </AppLayout>
     );
 }
