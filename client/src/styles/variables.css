@@ -1,0 +1,24 @@
+:root {
+  /* Computer Lab Theme */
+  --bg: #16171d;
+  --panel: #1f2028;
+  --panel-2: #242633;
+
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+
+  --border: #2e303a;
+
+  --accent: #aa3bff;
+  --accent-hover: #c084fc;
+
+  --success: #22c55e;
+  --error: #ef4444;
+  --warning: #f59e0b;
+
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+
+  --font: system-ui, "Segoe UI", Roboto, sans-serif;
+}

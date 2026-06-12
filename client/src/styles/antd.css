@@ -1,0 +1,32 @@
+.ant-card {
+  background: var(--panel) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  border-radius: 10px !important;
+}
+
+.ant-input,
+.ant-input-password {
+  background: var(--panel-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-h) !important;
+}
+
+.ant-btn-primary {
+  background: var(--accent) !important;
+  border: none !important;
+}
+
+.ant-btn-primary:hover {
+  background: var(--accent-hover) !important;
+}
+
+.ant-form-item-label > label {
+  color: var(--text-h) !important;
+}
+
+.ant-message-notice-content {
+  background: var(--panel) !important;
+  color: var(--text-h) !important;
+  border: 1px solid var(--border);
+}
