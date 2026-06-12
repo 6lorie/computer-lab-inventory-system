@@ -1,23 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-    Table,
-    Button,
-    message,
-    Space,
-    Modal,
-    Input,
-    InputNumber,
-} from "antd";
-
+import {Table, Button, message, Space, Modal,Input, InputNumber,} from "antd";
 import AppLayout from "../components/AppLayout";
-
-
-import {
-    addEquipment,
-    getEquipment,
-    deleteEquipment,
-    updateEquipment,
-} from "../services/equipmentService";
+import { addEquipment, getEquipment, deleteEquipment, updateEquipment, } from "../services/equipmentService";
 
 function Equipment() {
     const [data, setData] = useState<any[]>([]);

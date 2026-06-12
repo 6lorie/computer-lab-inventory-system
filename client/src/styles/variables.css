@@ -1,16 +1,16 @@
 :root {
   /* Computer Lab Theme */
-  --bg: #16171d;
-  --panel: #1f2028;
-  --panel-2: #242633;
+  --bg: #ffffff;
+  --panel: #e7e8f0;
+  --panel-2: #cacff4;
 
-  --text: #9ca3af;
-  --text-h: #f3f4f6;
+  --text: #02060d;
+  --text-h: #010611;
 
-  --border: #2e303a;
+  --border: #eef0f6;
 
-  --accent: #aa3bff;
-  --accent-hover: #c084fc;
+  --accent: #4827ab;
+  --accent-hover: #481877;
 
   --success: #22c55e;
   --error: #ef4444;

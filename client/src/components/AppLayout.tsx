@@ -9,7 +9,7 @@ function AppLayout({ children }: any) {
     <Layout style={{ minHeight: "100vh" }}>
 
       {/* Sidebar */}
-      <Sider width={220}>
+      <Sider width={220} >
         <Sidebar />
       </Sider>
 
@@ -17,7 +17,10 @@ function AppLayout({ children }: any) {
       <Layout>
 
         {/* Topbar */}
-        <Topbar />
+        
+        <Layout >
+          <Topbar />
+        </Layout>
 
         {/* Page Content */}
         <Content
