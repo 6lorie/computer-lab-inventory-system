@@ -102,6 +102,22 @@ function Equipment() {
         return true;
     };
 
+    const validateBorrowForm = () => {
+        const { borrower_name, quantity } = borrowForm;
+
+        if (!borrower_name) {
+            message.error("Please enter borrower name");
+            return false;
+        }
+
+        if (quantity === null || quantity === undefined || quantity <= 0) {
+            message.error("Quantity must be valid");
+            return false;
+        }
+
+        return true;
+    };
+
     const submitAdd = async () => {
         if (!validateAddForm()) return;
 
@@ -171,12 +187,17 @@ function Equipment() {
     };
 
     const submitBorrow = async () => {
+
+        if (!validateBorrowForm()) {
+            return;
+        }
+
         await borrowEquipment(borrowForm);
 
         message.success("Borrow successful");
 
         closeBorrow();
-        load(); // refresh stock
+        load();
     };
 
 

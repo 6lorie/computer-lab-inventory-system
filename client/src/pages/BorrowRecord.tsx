@@ -23,7 +23,7 @@ function BorrowRecords() {
         await returnEquipment({ borrow_id: id });
 
         message.success("Returned successfully");
-        
+
         load();
     };
 
@@ -93,7 +93,7 @@ function BorrowRecords() {
                     borderColor: "grey"
                 }}
             />
-            
+
             <Table
                 dataSource={data.filter((item) => {
                     const keyword = search.toLowerCase();
@@ -103,10 +103,19 @@ function BorrowRecords() {
                         item.borrower_name.toLowerCase().includes(keyword) ||
                         item.equipment_name.toLowerCase().includes(keyword)
                     );
-                })}
+                }).sort((a, b) => {
+                    
+                    if (!a.returned_date && b.returned_date) return -1;
+                    if (a.returned_date && !b.returned_date) return 1;
+
+                    
+                    return b.id - a.id;
+                })
+
+                }
                 rowKey="id"
                 columns={columns}
-                pagination={{pageSize:6}}
+                pagination={{ pageSize: 6 }}
             />
         </AppLayout>
     );
