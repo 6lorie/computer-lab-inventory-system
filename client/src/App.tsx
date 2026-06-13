@@ -16,6 +16,7 @@ from "react-router-dom";
 import ProtectedRoute from "./components/protectedRoute";
 
 import BorrowRecords from "./pages/BorrowRecord";
+import PublicRoute from "./components/loginRoute";
 
 function App() {
 
@@ -28,7 +29,10 @@ return (
 <Route
 path="/"
 element={
-<Login />
+  <PublicRoute>
+    <Login />
+  </PublicRoute>
+
 }
 />
 
