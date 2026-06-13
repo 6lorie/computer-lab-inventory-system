@@ -1,17 +1,8 @@
-/* ============================
-   CREATE DATABASE
-============================ */
-
 CREATE DATABASE ComputerLabInventorySystem;
 GO
 
 USE ComputerLabInventorySystem;
 GO
-
-
-/* ============================
-   USERS
-============================ */
 
 CREATE TABLE users (
     id INT PRIMARY KEY IDENTITY(1,1),
@@ -32,11 +23,6 @@ CREATE TABLE users (
         DEFAULT GETDATE()
 );
 GO
-
-
-/* ============================
-   EQUIPMENT
-============================ */
 
 CREATE TABLE equipment (
     id INT PRIMARY KEY IDENTITY(1,1),
@@ -66,10 +52,6 @@ CREATE TABLE equipment (
 GO
 
 
-/* ============================
-   BORROW RECORDS
-============================ */
-
 CREATE TABLE borrow_records (
     id INT PRIMARY KEY IDENTITY(1,1),
 
@@ -97,9 +79,6 @@ CREATE TABLE borrow_records (
 GO
 
 
-/* ============================
-   SAMPLE USERS
-============================ */
 
 INSERT INTO users
 (
@@ -119,10 +98,6 @@ VALUES
 GO
 
 
-/* ============================
-   SAMPLE EQUIPMENT
-============================ */
-
 INSERT INTO equipment
 (
     equipment_code,
@@ -134,57 +109,18 @@ INSERT INTO equipment
 )
 VALUES
 
-(
-'PC-001',
-'Desktop Computer',
-'Computer',
-30,
-30,
-'Lab A'
-),
+('PC-001', 'Desktop Computer', 'Computer', 30, 30,'Lab A'),
 
-(
-'MON-001',
-'Monitor',
-'Display',
-25,
-25,
-'Lab A'
-),
+('MON-001', 'Monitor', 'Display', 25, 25, 'Lab A'),
 
-(
-'KEY-001',
-'Keyboard',
-'Accessory',
-40,
-40,
-'Storage'
-),
+('KEY-001', 'Keyboard', 'Accessory', 40, 40, 'Storage'),
 
-(
-'MOU-001',
-'Mouse',
-'Accessory',
-40,
-40,
-'Storage'
-),
+('MOU-001', 'Mouse', 'Accessory', 40, 40, 'Storage' ),
 
-(
-'PRO-001',
-'Projector',
-'Presentation',
-2,
-2,
-'Room 201'
-);
+( 'PRO-001', 'Projector', 'Presentation', 2, 2, 'Room 201' );
 
 GO
 
-
-/* ============================
-   TEST QUERIES
-============================ */
 
 SELECT * FROM users;
 
