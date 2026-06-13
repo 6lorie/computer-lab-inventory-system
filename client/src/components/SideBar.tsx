@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 function SideBar() {
   const navigate = useNavigate();
+
+  const selectedKey = location.pathname.replace("/", "") || "dashboard";
+
   
   return (
      <div
@@ -29,7 +32,7 @@ function SideBar() {
     <Menu
       theme="light"
       mode="inline"
-      defaultSelectedKeys={["dashboard"]}
+      selectedKeys={[selectedKey]}
       style={{
         height: "100%",
         background: "var(--panel)",
