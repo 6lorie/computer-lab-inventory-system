@@ -6,8 +6,7 @@ export default function ProtectedRoute({ children }: any) {
   const user = getUser();
 
   if (!user) {
-    return <Navigate to="/" replace />;
-  }
+    return <Navigate to="/" replace />;}
   
   return children;
 }

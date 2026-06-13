@@ -7,11 +7,7 @@ from "./pages/Dashboard";
 import Equipment from "./pages/Equipment";
 import Reports from "./pages/Reports";
 
-import {
-BrowserRouter,
-Routes,
-Route
-}
+import { BrowserRouter, Routes, Route}
 from "react-router-dom";
 import ProtectedRoute from "./components/protectedRoute";
 
